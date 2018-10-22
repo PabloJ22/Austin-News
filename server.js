@@ -28,7 +28,7 @@ app.get("/scrape", function (req, res) {
     request("http://spectrumlocalnews.com/tx/austin", function (error, response, html) {
         var $ = cheerio.load(html);
 
-        $("article").each(function (i, element) {
+        $("article.a").each(function (i, element) {
             var result = {};
 
             result.title = $(element)
@@ -37,13 +37,18 @@ app.get("/scrape", function (req, res) {
                 .parent()
                 .attr("href");
 
-            db.Article.create(result)
-                .then(function (dbArticle) {
-                    console.log(dbArticle);
-                })
-                .catch(function (err) {
-                    return res.json(err);
-                });
+            results.push({
+                title: title,
+                link: link
+            });
+
+            // db.Article.create(result)
+            //     .then(function (dbArticle) {
+            //         console.log(dbArticle);
+            //     })
+            //     .catch(function (err) {
+            //         return res.json(err);
+            //     });
         });
 
         res.send("Scrape Complete");
