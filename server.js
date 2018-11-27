@@ -21,7 +21,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(express.static("public"));
 
-mongoose.connect("mongodb://localhost/MongoScrape");
+mongoose.connect("mongodb://localhost/AustinNews");
 
 //had some trouble with the scraping. 
 app.get("/scrape", function (req, res) {
